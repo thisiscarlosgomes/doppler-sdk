@@ -160,6 +160,28 @@ export class ReadWriteFactory extends ReadFactory {
     );
   }
 
+  public encodeCustomLPLiquidityMigratorData(
+    customLPConfig: {
+      customLPWad: bigint;
+      customLPRecipient: Address;
+      lockupPeriod: number;
+    }
+  ): Hex {
+    return encodeAbiParameters(
+      [
+        { type: 'uint64' },
+        { type: 'address' },
+        { type: 'uint32' },
+
+      ],
+      [
+        customLPConfig.customLPWad,
+        customLPConfig.customLPRecipient,
+        customLPConfig.lockupPeriod,
+      ]
+    );
+  }
+
   public buildConfig(
     params: DopplerPreDeploymentConfig,
     addresses: DopplerV4Addresses
@@ -245,7 +267,7 @@ export class ReadWriteFactory extends ReadFactory {
         tokenFactory,
         tokenFactoryData: tokenParams,
         poolInitializer: v4Initializer,
-        poolInitializerData: dopplerParams,
+        poolInitializerData: dopplerParams
       });
 
     const governanceFactoryData = encodeAbiParameters(
