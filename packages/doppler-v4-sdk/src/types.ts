@@ -1,4 +1,11 @@
-import { Address, Hash, PublicClient, TestClient, WalletClient } from 'viem';
+import {
+  Address,
+  Hash,
+  PublicClient,
+  TestClient,
+  WalletClient,
+  Hex,
+} from 'viem';
 
 export interface Clients {
   publicClient: PublicClient;
@@ -96,6 +103,9 @@ export interface DopplerPreDeploymentConfig {
   vestingDuration: bigint;
   recipients: Address[];
   amounts: bigint[];
+
+  // Liquidity migration parameters
+  liquidityMigratorData?: Hex;
 
   integrator: Address;
 }

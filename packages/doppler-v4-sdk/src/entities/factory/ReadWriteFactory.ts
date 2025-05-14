@@ -34,11 +34,11 @@ const DEFAULT_INITIAL_PROPOSAL_THRESHOLD = BigInt(0);
 const FLAG_MASK = BigInt(0x3fff);
 const flags = BigInt(
   (1 << 13) | // BEFORE_INITIALIZE_FLAG
-  (1 << 12) | // AFTER_INITIALIZE_FLAG
-  (1 << 11) | // BEFORE_ADD_LIQUIDITY_FLAG
-  (1 << 7) | // BEFORE_SWAP_FLAG
-  (1 << 6) | // AFTER_SWAP_FLAG
-  (1 << 5) // BEFORE_DONATE_FLAG
+    (1 << 12) | // AFTER_INITIALIZE_FLAG
+    (1 << 11) | // BEFORE_ADD_LIQUIDITY_FLAG
+    (1 << 7) | // BEFORE_SWAP_FLAG
+    (1 << 6) | // AFTER_SWAP_FLAG
+    (1 << 5) // BEFORE_DONATE_FLAG
 );
 
 export class ReadWriteFactory extends ReadFactory {
@@ -160,20 +160,13 @@ export class ReadWriteFactory extends ReadFactory {
     );
   }
 
-  public encodeCustomLPLiquidityMigratorData(
-    customLPConfig: {
-      customLPWad: bigint;
-      customLPRecipient: Address;
-      lockupPeriod: number;
-    }
-  ): Hex {
+  public encodeCustomLPLiquidityMigratorData(customLPConfig: {
+    customLPWad: bigint;
+    customLPRecipient: Address;
+    lockupPeriod: number;
+  }): Hex {
     return encodeAbiParameters(
-      [
-        { type: 'uint64' },
-        { type: 'address' },
-        { type: 'uint32' },
-
-      ],
+      [{ type: 'uint64' }, { type: 'address' }, { type: 'uint32' }],
       [
         customLPConfig.customLPWad,
         customLPConfig.customLPRecipient,
@@ -267,7 +260,7 @@ export class ReadWriteFactory extends ReadFactory {
         tokenFactory,
         tokenFactoryData: tokenParams,
         poolInitializer: v4Initializer,
-        poolInitializerData: dopplerParams
+        poolInitializerData: dopplerParams,
       });
 
     const governanceFactoryData = encodeAbiParameters(
@@ -297,7 +290,7 @@ export class ReadWriteFactory extends ReadFactory {
       poolInitializer: v4Initializer,
       poolInitializerData,
       liquidityMigrator: migrator,
-      liquidityMigratorData: '0x',
+      liquidityMigratorData: params.liquidityMigratorData ?? '0x',
       integrator: params.integrator,
       salt,
       hook,
